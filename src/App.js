@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./App.css";
 import Slider from "./components/Slider";
 import SidebarItem from "./components/SidebarItem";
@@ -81,6 +81,7 @@ function App() {
   const [imageUrl, setImageUrl] = useState(
     "https://source.unsplash.com/EwKXn5CapA4"
   );
+  const imageFileEl = useRef();
   const [options, setOptions] = useState(DEFAULT_OPTIONS);
   const selectedOption = options[selectedOptionIndex];
 
@@ -109,6 +110,25 @@ function App() {
     console.log(image);
     // document.querySelector('.main-image').style.backgroundImage = 'url("https://source.unsplash.com/EwKXn5CapA4")';
   }
+
+  function uploadImage() {
+    document.querySelector(".image-file").click();
+    return;
+  }
+  function setNewImage() {
+    console.log(imageFileEl.current.files[0]);
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      setOptions(DEFAULT_OPTIONS);
+      document.querySelector(
+        ".main-image"
+      ).style.backgroundImage = `url(${e.target.result})`;
+    };
+
+    if (imageFileEl.current.files[0] !== "undefined") {
+      fileReader.readAsDataURL(imageFileEl.current.files[0]);
+    }
+  }
   return (
     <>
       <div className="container">
@@ -123,9 +143,20 @@ function App() {
               />
             );
           })}
-          <a onClick={downloadImage} className="download-image">
-            Download
+          <input
+            type="file"
+            className="image-file"
+            onChange={setNewImage}
+            ref={imageFileEl}
+            accept="image/*"
+            style={{ display: "none" }}
+          />
+          <a onClick={uploadImage} className="download-image">
+            Upload Image
           </a>
+          {/* <a onClick={downloadImage} className="download-image">
+            Download
+          </a> */}
         </div>
         <div className="main-image" style={getImageStyles()}></div>
         <Slider option={selectedOption} changeValue={handleOptionsChange} />
