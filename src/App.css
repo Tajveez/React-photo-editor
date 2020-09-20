@@ -10,11 +10,11 @@ body {
 
 .container {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto 1fr;
   grid-template-rows: 1fr auto;
   grid-template-areas:
-    "image sidebar"
-    "slider sidebar";
+    "sidebar image"
+    "sidebar slider";
   height: 100vh;
   width: 100vw;
   background-color: #dadada;
@@ -30,7 +30,41 @@ body {
 }
 .sidebar {
   grid-area: sidebar;
-  background: yellow;
+  background: #585757;
+  border-right: 1px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.sidebar-item {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: #585757;
+  padding: 1rem;
+  position: relative;
+  transition: background-color 150ms;
+}
+
+.sidebar-item:hover,
+.sidebar-item:focus {
+  background-color: #a8a4a4;
+}
+
+.sidebar-item.active {
+  background-color: #dad6d6;
+  color: black;
+}
+
+.sidebar-item::after {
+  content: "";
+  position: absolute;
+  width: 80%;
+  bottom: 0;
+  height: 1px;
+  left: 10%;
+  background: white;
 }
 .slider-container {
   grid-area: slider;
@@ -40,4 +74,7 @@ body {
 .slider {
   width: 100%;
   cursor: pointer;
+}
+
+.sidebar-item {
 }
