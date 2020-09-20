@@ -78,6 +78,9 @@ const DEFAULT_OPTIONS = [
 
 function App() {
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
+  const [imageUrl, setImageUrl] = useState(
+    "https://source.unsplash.com/EwKXn5CapA4"
+  );
   const [options, setOptions] = useState(DEFAULT_OPTIONS);
   const selectedOption = options[selectedOptionIndex];
 
@@ -101,23 +104,33 @@ function App() {
     return { filter: filters.join(" ") };
   }
 
+  function downloadImage() {
+    const image = document.querySelector("body .main-image");
+    console.log(image);
+    // document.querySelector('.main-image').style.backgroundImage = 'url("https://source.unsplash.com/EwKXn5CapA4")';
+  }
   return (
-    <div className="container">
-      <div className="sidebar">
-        {options.map((option, index) => {
-          return (
-            <SidebarItem
-              key={index}
-              name={option.name}
-              active={index === selectedOptionIndex}
-              handleClick={() => setSelectedOptionIndex(index)}
-            />
-          );
-        })}
+    <>
+      <div className="container">
+        <div className="sidebar">
+          {options.map((option, index) => {
+            return (
+              <SidebarItem
+                key={index}
+                name={option.name}
+                active={index === selectedOptionIndex}
+                handleClick={() => setSelectedOptionIndex(index)}
+              />
+            );
+          })}
+          <a onClick={downloadImage} className="download-image">
+            Download
+          </a>
+        </div>
+        <div className="main-image" style={getImageStyles()}></div>
+        <Slider option={selectedOption} changeValue={handleOptionsChange} />
       </div>
-      <div className="main-image" style={getImageStyles()}></div>
-      <Slider option={selectedOption} changeValue={handleOptionsChange} />
-    </div>
+    </>
   );
 }
 

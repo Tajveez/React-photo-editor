@@ -76,5 +76,16 @@ body {
   cursor: pointer;
 }
 
-.sidebar-item {
+.download-image {
+  color: white;
+  border: 1px solid white;
+  margin-top: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 0.7rem;
+}
+.download-image:hover {
+  background-color: white;
+  color: black;
+  cursor: pointer;
 }
